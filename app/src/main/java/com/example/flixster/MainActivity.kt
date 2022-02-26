@@ -1,5 +1,6 @@
 package com.example.flixster
 
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -37,7 +38,8 @@ class MainActivity : AppCompatActivity() {
                 Log.i(TAG, "onSuccess: JSON data $json")
                 try {
                     val movieJsonArray = json.jsonObject.getJSONArray("results")
-                    movies.addAll(Movie.fromJsonArray(movieJsonArray))
+                    val isPortraitOrientation = resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+                    movies.addAll(Movie.fromJsonArray(movieJsonArray, isPortraitOrientation))
                     movieAdapter.notifyDataSetChanged()
                     Log.i(TAG, "Movie list $movies")
                 } catch (e: JSONException) {
